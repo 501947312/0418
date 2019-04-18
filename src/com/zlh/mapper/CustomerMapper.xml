@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxw.po.customer">
+
+
+    <insert id="insert" parameterType="customer">
+    insert into t_customer value (DEFAULT,#{username},#{jobs},#{phone})
+    </insert>
+  <delete id="delete" parameterType="int">
+  delete from t_customer where id=#{id}
+
+  </delete>
+
+<select id="bianli" resultType="customer">
+select *from t_customer
+</select>
+    <select id="Byid" parameterType="int" resultType="customer">
+
+      select *from t_customer where id=#{id}
+
+
+</select>
+    <update id="updateCustomer" parameterType="customer">
+update   t_customer set username=#{username},jobs=#{jobs},phone=#{phone}  where id=#{id}
+    </update>
+
+
+
+
+<select id="mohu" parameterType="map" resultType="customer" >
+SELECT *from t_customer where username like  concat ('%',#{username1},'%') order by
+(CASE
+WHEN  username = #{username1} then 1
+WHEN  username like concat (#{username1},'%') then 2
+WHEN  username like concat ('%',#{username1}) then 3
+WHEN  username like concat ('%',#{username1},'%') then 4
+else 0
+end )
+limit #{pages},#{pagenum}
+</select>
+</mapper>
+
